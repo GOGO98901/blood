@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.newdawn.slick.SlickException;
 
 import me.roryclaasen.blood.graphics.DisplayMaster;
-import me.roryclaasen.blood.graphics.GameCanvas;
 import net.gogo98901.log.Log;
 import net.roryclaasen.language.LangUtil;
 import net.roryclaasen.language.LanguageFile;

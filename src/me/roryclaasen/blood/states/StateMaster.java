@@ -28,9 +28,9 @@ public class StateMaster {
 
 	public StateMaster(GameLoop gameLoop) {
 		this.gameLoop = gameLoop;
-		
+
 		states.put(StateNames.MENU, new StateMenu(StateNames.MENU));
-		states.put(StateNames.GAME, new StateMenu(StateNames.GAME));
+		states.put(StateNames.GAME, new StateGame(StateNames.GAME));
 	}
 
 	public void changeTo(StateNames name) {
@@ -50,5 +50,10 @@ public class StateMaster {
 			Log.info("Adding state " + state.getName());
 			gameLoop.addState(state);
 		}
+		gameLoop.enterState(StateNames.MENU.ordinal());
+	}
+
+	public StateNames getCurrent() {
+		return current;
 	}
 }
