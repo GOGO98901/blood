@@ -2,7 +2,6 @@ package me.roryclaasen.blood.graphics;
 
 import me.roryclaasen.blood.GameLoop;
 import me.roryclaasen.blood.states.StateMaster;
-import me.roryclaasen.blood.states.StateMaster.StateNames;
 
 public class GameCanvas {
 
@@ -14,8 +13,6 @@ public class GameCanvas {
 
 	public void initStates() {
 		states.init();
-		
-		states.changeTo(StateNames.GAME); // TODO Make a menu!
 	}
 
 	public StateMaster getStateMaster() {
