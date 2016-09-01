@@ -38,13 +38,15 @@ public class GameLevel {
 	}
 
 	public void update(int delta) {
-		x_off = (int) Math.round((-(player.getPosition().x - (GameMaster.SIZE.width / 2)) - 32));
-		y_off = (int) Math.round((-(player.getPosition().y - (GameMaster.SIZE.height / 2)) - 32));
+		x_off = (int) Math.round((-(player.getPosition().x - (GameMaster.SIZE.width / 2)) - 32)) - 16;
+		y_off = (int) Math.round((-(player.getPosition().y - (GameMaster.SIZE.height / 2)) - 32)) - 16;
 
 		if (x_off > 0) x_off = 0;
 		if (y_off > 0) y_off = 0;
-		// if (x_off < width / 64) x_off = width * 64;
-		// if (y_off < height / 64) y_off = height * 64;
+		int x_offTest = -((current.getWidth() * 64) - GameMaster.SIZE.width);
+		int y_offTest = -((current.getHeight() * 64) - GameMaster.SIZE.height);
+		if (x_off < x_offTest) x_off = x_offTest;
+		if (y_off < y_offTest) y_off = y_offTest;
 
 		player.update(delta);
 		Iterator<Entity> it = entities.iterator();
@@ -54,12 +56,16 @@ public class GameLevel {
 	}
 
 	public void render(Graphics g) {
-		int px, py;
-		px = (int) Math.round(player.getPosition().x / 64);
-		py = (int) Math.round(player.getPosition().y / 64);
-		int renderWidth = 10, renderHeight = 10;
-		for (int x = px - (renderWidth / 2); x < renderWidth; x++) {
-			for (int y = py - (renderHeight / 2); y < renderHeight; y++) {
+		/*
+		 * int px, py;
+		 * px = (int) Math.round(player.getPosition().x / 64);
+		 * py = (int) Math.round(player.getPosition().y / 64);
+		 * for (int x = px - (renderWidth / 2); x < px + renderWidth; x++) {
+		 * for (int y = py - (renderHeight / 2); y < py + renderHeight; y++) {
+		 */
+		for (int x = 0; x < current.getWidth(); x++) {
+			for (int y = 0; y < current.getHeight(); y++) {
+				if (x < 0 || y < 0 || x >= current.getWidth() || y >= current.getHeight()) continue;
 				Tile tile = current.getTile(x, y);
 				if (tile != null) {
 					tile.getSprite().getImage().draw(x_off + x * 64, y_off + y * 64);
@@ -68,6 +74,7 @@ public class GameLevel {
 		}
 		// TODO Only render the entities that are on the screen
 		player.render(x_off, y_off, g);
+
 		Iterator<Entity> it = entities.iterator();
 		while (it.hasNext()) {
 			Entity entity = it.next();

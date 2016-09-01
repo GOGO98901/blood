@@ -24,10 +24,10 @@ public class Tiles {
 		tiles.add(new TileWall(wallsBlack.getSprite(64, 64), new Color(30, 30, 30)));
 		tiles.add(new TileWall(wallsBlack.getSprite(0, 64), new Color(40, 40, 40)));
 
-		tiles.add(new TileWall(wallsBlack.getSprite(0, 128), new Color(50, 50, 50)));
-		tiles.add(new TileWall(wallsBlack.getSprite(64, 128), new Color(60, 60, 60)));
-		tiles.add(new TileWall(wallsBlack.getSprite(64, 192), new Color(70, 70, 70)));
-		tiles.add(new TileWall(wallsBlack.getSprite(0, 128), new Color(80, 80, 80)));
+		tiles.add(new TileWall(wallsBlack.getSprite(128, 0), new Color(50, 50, 50)));
+		tiles.add(new TileWall(wallsBlack.getSprite(128, 64), new Color(60, 60, 60)));
+		tiles.add(new TileWall(wallsBlack.getSprite(192, 64), new Color(70, 70, 70)));
+		tiles.add(new TileWall(wallsBlack.getSprite(192, 0), new Color(80, 80, 80)));
 	}
 
 	public void addTile(Tile tile) {

@@ -11,7 +11,7 @@ import net.roryclaasen.language.LangUtil;
 import net.roryclaasen.language.LanguageFile;
 
 public class GameMaster {
-	public final static Dimension SIZE = new Dimension(800, 500);
+	public final static Dimension SIZE = new Dimension(800, 600);
 
 	private static GameMaster master;
 	private static GameLoop loop;

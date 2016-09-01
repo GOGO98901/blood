@@ -39,4 +39,12 @@ public class Map {
 		if (x + y * width < 0 || x + y * width >= dataMap.length) return Tiles.tileNull;
 		return Tiles.getTile(dataMap[x + y * width]);
 	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
 }
