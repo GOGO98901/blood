@@ -20,7 +20,7 @@ public class Sprite {
 		return image;
 	}
 
-	public boolean isFailed() {
+	public boolean hasFailed() {
 		return failed;
 	}
 }

@@ -23,10 +23,12 @@ public class StateGame extends StateBase {
 	}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException {}
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		level.init();
+	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(int delta) {
 		level.update(delta);
 	}
 

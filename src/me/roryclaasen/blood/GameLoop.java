@@ -25,7 +25,6 @@ public class GameLoop extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		// TODO Auto-generated method stub
 		inputHandlers.addInputDevices(container);
 		canvas.initStates();
 	}

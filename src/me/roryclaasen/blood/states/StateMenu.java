@@ -18,7 +18,7 @@ public class StateMenu extends StateBase {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {}
+	public void update(int delta) {}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {

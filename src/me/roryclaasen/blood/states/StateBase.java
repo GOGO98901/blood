@@ -22,7 +22,12 @@ public abstract class StateBase extends BasicGameState {
 	}
 
 	@Override
-	public abstract void update(GameContainer container, StateBasedGame game, int delta) throws SlickException;
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		GameMaster.getLoop().getInputHandlers().keyboard.update();
+		update(delta);
+	}
+	
+	public abstract void update(int delta);
 
 	@Override
 	public abstract void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException;
