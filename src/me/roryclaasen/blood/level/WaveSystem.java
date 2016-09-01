@@ -1,5 +1,6 @@
 package me.roryclaasen.blood.level;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import net.gogo98901.log.Log;
@@ -52,6 +53,7 @@ public class WaveSystem {
 
 	public void render(Graphics g) {
 		if (renderWave) {
+			g.setColor(Color.black);
 			g.drawString(LangUtil.get("game.wave") + " " + currentWave, 100, 100);
 		}
 	}

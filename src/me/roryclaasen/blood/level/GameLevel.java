@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import me.roryclaasen.blood.GameMaster;
