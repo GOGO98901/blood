@@ -31,7 +31,9 @@ public abstract class Mob extends Entity {
 	@Override
 	public abstract void update(int delta);
 
-	public abstract void render(Graphics g);
+	public void render(int x_off, int y_off, Graphics g) {
+		if (sprite != null) g.drawImage(sprite.getImage(), x_off + position.x, y_off + position.y);
+	}
 
 	protected void move(float xa, float ya) {
 		if (xa == 0 && ya == 0) return;
