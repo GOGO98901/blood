@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import me.roryclaasen.blood.GameMaster;
 import me.roryclaasen.blood.graphics.sprite.Sprite;
 import me.roryclaasen.blood.graphics.tile.Tile;
+import me.roryclaasen.blood.level.entity.Enemy;
 import me.roryclaasen.blood.level.entity.Entity;
 import me.roryclaasen.blood.level.entity.Mob;
 import me.roryclaasen.blood.level.entity.Player;
@@ -35,6 +36,7 @@ public class GameLevel {
 
 		current = base;
 		player.setSprite(new Sprite("textures/tiles/tileGroundWhite.png"));
+		entities.add(new Enemy().setSprite(new Sprite("textures/null.png")));
 	}
 
 	public void update(int delta) {
@@ -49,6 +51,8 @@ public class GameLevel {
 		if (y_off < y_offTest) y_off = y_offTest;
 
 		player.update(delta);
+		player.updateMouseAngle(x_off, y_off);
+		
 		Iterator<Entity> it = entities.iterator();
 		while (it.hasNext()) {
 			it.next().update(delta);

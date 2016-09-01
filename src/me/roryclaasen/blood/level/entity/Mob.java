@@ -1,6 +1,7 @@
 package me.roryclaasen.blood.level.entity;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 import me.roryclaasen.blood.graphics.sprite.Sprite;
@@ -12,6 +13,7 @@ public abstract class Mob extends Entity {
 	protected float speed = 1F;
 
 	protected Vector2f size;
+	protected float rotation = 0f;;
 
 	protected Sprite sprite;
 
@@ -32,7 +34,12 @@ public abstract class Mob extends Entity {
 	public abstract void update(int delta);
 
 	public void render(int x_off, int y_off, Graphics g) {
-		if (sprite != null) g.drawImage(sprite.getImage(), x_off + position.x, y_off + position.y);
+		if (sprite != null) {
+			Image image = sprite.getImage();
+			image.setCenterOfRotation(image.getWidth() / 2, image.getHeight() / 2);
+			image.setRotation(rotation);
+			g.drawImage(sprite.getImage(), x_off + position.x, y_off + position.y);
+		}
 	}
 
 	protected void move(float xa, float ya) {
@@ -50,8 +57,9 @@ public abstract class Mob extends Entity {
 		}
 	}
 
-	public void setSprite(Sprite sprite) {
+	public Mob setSprite(Sprite sprite) {
 		this.sprite = sprite;
+		return this;
 	}
 
 	public Sprite getSprite() {
