@@ -2,6 +2,7 @@ package me.roryclaasen.blood.level;
 
 import org.newdawn.slick.Graphics;
 
+import net.gogo98901.log.Log;
 import net.roryclaasen.language.LangUtil;
 
 public class WaveSystem {
@@ -26,21 +27,23 @@ public class WaveSystem {
 	}
 
 	public void nextWave() {
-		renderWave = true;
 		currentWave++;
 		time = 0;
 		toSpawn = (int) Math.ceil(currentWave * toSpawnBase * mul);
 	}
 
 	public void update(int delta) {
-		time += delta;
-		if (time > 50) {
-			if (toSpawn != 0) {
+		time += 0.5 * delta;
+		if (time > 500 - (currentWave * (1 + mul))) {
+			if (toSpawn > 0) {
+				toSpawn--;
+				Log.info(toSpawn);
 				level.spawnNewEnemy();
 				time = 0;
-				toSpawn--;
+				if (toSpawn == 0) nextWave();
 			} else {
-				if (time > 100) {
+				renderWave = true;
+				if (time > 1000) {
 					nextWave();
 				}
 			}
