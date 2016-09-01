@@ -3,6 +3,8 @@ package me.roryclaasen.blood.level.entity;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import me.roryclaasen.blood.handler.HandlerMouse;
+
 public class Player extends Mob {
 
 	public Player() {
@@ -10,7 +12,9 @@ public class Player extends Mob {
 	}
 
 	@Override
-	public void update(int delta) {}
+	public void update(int delta) {
+		this.setPosition(HandlerMouse.getX(), HandlerMouse.getY());
+	}
 
 	@Override
 	public void render(Graphics g) {

@@ -29,6 +29,7 @@ public class GameLevel {
 	}
 
 	public void render(Graphics g) {
+		// TODO Only render the entities that are on the screen
 		player.render(g);
 		Iterator<Entity> it = entities.iterator();
 		while (it.hasNext()) {
