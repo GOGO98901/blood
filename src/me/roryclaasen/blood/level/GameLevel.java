@@ -3,8 +3,11 @@ package me.roryclaasen.blood.level;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 
 import me.roryclaasen.blood.GameMaster;
 import me.roryclaasen.blood.graphics.sprite.Sprite;
@@ -13,11 +16,15 @@ import me.roryclaasen.blood.level.entity.Enemy;
 import me.roryclaasen.blood.level.entity.Entity;
 import me.roryclaasen.blood.level.entity.Mob;
 import me.roryclaasen.blood.level.entity.Player;
+import me.roryclaasen.blood.level.entity.Projectile;
 
 public class GameLevel {
+	private Random random = new Random();
 	private Player player;
 
 	private List<Entity> entities;
+	private List<Enemy> enemies;
+	private List<Projectile> projectiles;
 
 	private Map base;
 
@@ -26,20 +33,26 @@ public class GameLevel {
 	private int x_off = 0;
 	private int y_off = 0;
 
+	private WaveSystem waves;
+
 	public GameLevel() {
 		entities = new ArrayList<Entity>();
-		player = new Player();
+		enemies = new ArrayList<Enemy>();
+		projectiles = new ArrayList<Projectile>();
+		waves = new WaveSystem(this);
 	}
 
 	public void init() {
 		base = new Map("base");
 
 		current = base;
-		player.setSprite(new Sprite("textures/tiles/tileGroundWhite.png"));
-		entities.add(new Enemy().setSprite(new Sprite("textures/null.png")));
+		player = new Player();
+		player.setSprite(new Sprite("textures/entities/player.png"));
+		waves.start();
 	}
 
 	public void update(int delta) {
+		waves.update(delta);
 		x_off = (int) Math.round((-(player.getPosition().x - (GameMaster.SIZE.width / 2)) - 32)) - 16;
 		y_off = (int) Math.round((-(player.getPosition().y - (GameMaster.SIZE.height / 2)) - 32)) - 16;
 
@@ -52,14 +65,33 @@ public class GameLevel {
 
 		player.update(delta);
 		player.updateMouseAngle(x_off, y_off);
-		
-		Iterator<Entity> it = entities.iterator();
-		while (it.hasNext()) {
-			it.next().update(delta);
+
+		Iterator<Projectile> itPro = projectiles.iterator();
+		while (itPro.hasNext()) {
+			Projectile pro = itPro.next();
+			pro.update(delta);
+			if (pro.isRemoved()) itPro.remove();
+		}
+		Iterator<Entity> itEnt = entities.iterator();
+		while (itEnt.hasNext()) {
+			Entity entity = itEnt.next();
+			entity.update(delta);
+			if (entity.isRemoved()) itEnt.remove();
+			if (entity instanceof Enemy) {
+				((Enemy) entity).setTracking(player.getPosition());
+			}
+		}
+		Iterator<Enemy> itEnm = enemies.iterator();
+		while (itEnm.hasNext()) {
+			Enemy enemy = itEnm.next();
+			enemy.update(delta, projectiles);
+			if (enemy.isRemoved()) itEnm.remove();
+			enemy.setTracking(player.getPosition());
 		}
 	}
 
 	public void render(Graphics g) {
+		waves.render(g);
 		/*
 		 * int px, py;
 		 * px = (int) Math.round(player.getPosition().x / 64);
@@ -77,15 +109,44 @@ public class GameLevel {
 			}
 		}
 		// TODO Only render the entities that are on the screen
-		player.render(x_off, y_off, g);
-
-		Iterator<Entity> it = entities.iterator();
-		while (it.hasNext()) {
-			Entity entity = it.next();
+		Iterator<Projectile> itPro = projectiles.iterator();
+		while (itPro.hasNext()) {
+			Projectile pro = itPro.next();
+			pro.render(x_off, y_off, g);
+		}
+		Iterator<Entity> itEnt = entities.iterator();
+		while (itEnt.hasNext()) {
+			Entity entity = itEnt.next();
 			if (entity instanceof Mob) {
 				((Mob) entity).render(x_off, y_off, g);
 			}
 		}
+		Iterator<Enemy> itEnm = enemies.iterator();
+		while (itEnm.hasNext()) {
+			Enemy enemy = itEnm.next();
+			enemy.render(x_off, y_off, g);
+		}
+		player.render(x_off, y_off, g);
+	}
+
+	public void add(Entity entity) {
+		if (entity instanceof Enemy) {
+			enemies.add((Enemy) entity);
+		} else if (entity instanceof Projectile) {
+			projectiles.add((Projectile) entity);
+		} else {
+			entities.add(entity);
+		}
+	}
+
+	public void spawnNewEnemy() {
+		Vector2f pos = getRandomPosition();
+		// TODO better spawning
+		add(new Enemy(pos.x, pos.y));
+	}
+
+	private Vector2f getRandomPosition() {
+		return new Vector2f(64 + random.nextInt((current.getWidth() - 2) * 64), 64 + random.nextInt((current.getHeight() - 2) * 64));
 	}
 
 	public static Map getCurrentMap() {

@@ -36,4 +36,8 @@ public class StateGame extends StateBase {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		level.render(g);
 	}
+
+	public GameLevel getLevel() {
+		return level;
+	}
 }

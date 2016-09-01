@@ -4,6 +4,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Entity {
 	protected Vector2f position;
+	protected boolean removed;
 
 	public Entity() {
 		this(0, 0);
@@ -29,5 +30,13 @@ public abstract class Entity {
 
 	public Vector2f getPosition() {
 		return position;
+	}
+
+	public boolean isRemoved() {
+		return removed;
+	}
+
+	public void remove() {
+		this.removed = true;
 	}
 }

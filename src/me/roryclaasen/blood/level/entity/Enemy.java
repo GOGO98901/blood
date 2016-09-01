@@ -1,17 +1,63 @@
 package me.roryclaasen.blood.level.entity;
 
+import java.util.List;
+import java.util.Random;
+
+import org.newdawn.slick.geom.Vector2f;
+
+import me.roryclaasen.blood.graphics.sprite.Sprite;
+
 public class Enemy extends Mob {
-	
-	public Enemy() {
-		super(100, 100);
+
+	private double health;
+
+	private Vector2f tracking;
+
+	public Enemy(float x, float y) {
+		super(x, y);
+		speed = 0.2f;
+		health = 1;
+
+		sprite = new Sprite("textures/entities/enemy" + ((new Random()).nextInt(4)) + ".png");
 	}
 
 	@Override
 	public void update(int delta) {
-
+		float xa = 0, ya = 0;
+		if (tracking != null) {
+			if (position.x > tracking.x) xa -= speed * delta;
+			if (position.x < tracking.x) xa += speed * delta;
+			if (position.y > tracking.y) ya -= speed * delta;
+			if (position.y < tracking.y) ya += speed * delta;
+			move(xa, ya);
+		}
+		setAngleToTarget();
 	}
 
-	public void setAngleToTarget(Entity entity) {
-		rotation = (float) Math.toDegrees(Math.atan2((entity.position.x - (position.y)), (entity.position.y - (position.x))));
+	public void update(int delta, List<Projectile> projectiles) {
+		update(delta);
+		for (Projectile p : projectiles) {
+			if (p.position.x > position.x && p.position.x + p.size.x < position.x + size.x) {
+				if (p.position.y > position.y && p.position.y + p.size.y < position.y + size.y) {
+					health--;
+					if (health < 0) remove();
+					p.remove();
+					// TODO add blood
+				}
+			}
+		}
+	}
+
+	public Vector2f getTracking() {
+		return tracking;
+	}
+
+	public void setTracking(Vector2f tracking) {
+		this.tracking = tracking;
+	}
+
+	private void setAngleToTarget() {
+		if (tracking != null) rotation = (float) Math.toDegrees(Math.atan2((tracking.y - (position.y)), (tracking.x - (position.x))));
+		else rotation = 0f;
 	}
 }

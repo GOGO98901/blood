@@ -52,8 +52,14 @@ public abstract class Mob extends Entity {
 	private void checkMove(Map map, float xa, float ya) {
 		float tx = position.x + xa;
 		float ty = position.y + ya;
-		if (!map.getTile((int) Math.round(tx / 64), (int) Math.round(ty / 64)).isSolid()) {
+		int offset = 0;
+		if (this instanceof Projectile) offset = 32;
+		if (!map.getTile((int) Math.round((tx - offset) / 64), (int) Math.round((ty - offset) / 64)).isSolid()) {
 			position.set(tx, ty);
+		} else {
+			if (this instanceof Projectile) {
+				remove();
+			}
 		}
 	}
 
