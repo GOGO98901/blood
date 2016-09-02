@@ -8,10 +8,14 @@ import org.newdawn.slick.TrueTypeFont;
 import net.gogo98901.log.Log;
 
 public class FontMannager {
-	public static TrueTypeFont spaceman = loadFont("font/SPACEMAN.ttf", 50F);
-	public static TrueTypeFont ka1 = loadFont("font/ka1.ttf", 25F);
+	public static TrueTypeFont spaceman, ka1;
 
-	private static TrueTypeFont loadFont(String ref,float size) {
+	public static void load() {
+		ka1 = loadFont("font/ka1.ttf", 25F);
+		//spaceman = loadFont("font/SPACEMAN.ttf", 50F);
+	}
+
+	private static TrueTypeFont loadFont(String ref, float size) {
 		Log.info("loading font '" + ref + "'");
 		try {
 			java.awt.Font javaFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, org.newdawn.slick.util.ResourceLoader.getResourceAsStream(ref));

@@ -9,6 +9,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import me.roryclaasen.blood.GameLoop;
 import me.roryclaasen.blood.GameMaster;
+import me.roryclaasen.blood.graphics.FontMannager;
 import net.gogo98901.log.Log;
 
 public class StateMaster {
@@ -51,6 +52,7 @@ public class StateMaster {
 			gameLoop.addState(state);
 		}
 		gameLoop.enterState(StateNames.MENU.ordinal());
+		FontMannager.load();
 	}
 
 	public StateNames getCurrent() {
