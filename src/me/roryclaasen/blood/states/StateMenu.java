@@ -8,7 +8,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import me.roryclaasen.blood.GameMaster;
+import me.roryclaasen.blood.graphics.FontMannager;
+import me.roryclaasen.blood.handler.HandlerKeyboard;
 import me.roryclaasen.blood.states.StateMaster.StateNames;
+import net.roryclaasen.language.LangUtil;
 
 public class StateMenu extends StateBase {
 
@@ -24,12 +27,9 @@ public class StateMenu extends StateBase {
 		logo = new Image("textures/logo.png", false, Image.FILTER_NEAREST);
 	}
 
-	int time = 0;
-
 	@Override
 	public void update(int delta) {
-		time += delta;
-		if(time > 3000){
+		if (HandlerKeyboard.space) {
 			StateMaster.StateNames.GAME.changeTo();
 		}
 	}
@@ -39,5 +39,8 @@ public class StateMenu extends StateBase {
 		g.setColor(Color.white);
 		g.fillRect(0, 0, GameMaster.SIZE.width, GameMaster.SIZE.height);
 		g.drawImage(logo.getScaledCopy(logoScale), (GameMaster.SIZE.width - (logo.getWidth() * logoScale)) / 2, (GameMaster.SIZE.height - (logo.getHeight() * logoScale)) / 4);
+		g.setColor(Color.black);
+		g.setFont(FontMannager.ka1);
+		g.drawString(LangUtil.get("game.state.menu"), GameMaster.SIZE.width / 4, ((GameMaster.SIZE.height - (logo.getHeight() * logoScale)) / 4) * 6);
 	}
 }

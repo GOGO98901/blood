@@ -52,5 +52,4 @@ public class Blood extends Entity {
 			}
 		}
 	}
-
 }

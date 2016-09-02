@@ -6,7 +6,6 @@ import java.util.Random;
 import org.newdawn.slick.geom.Vector2f;
 
 import me.roryclaasen.blood.GameMaster;
-import me.roryclaasen.blood.graphics.GameCanvas;
 import me.roryclaasen.blood.graphics.sprite.Sprite;
 import me.roryclaasen.blood.level.GameLevel;
 import me.roryclaasen.blood.states.StateGame;
