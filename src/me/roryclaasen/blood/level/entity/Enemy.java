@@ -29,7 +29,9 @@ public class Enemy extends Mob {
 			if (position.x < tracking.x) xa += speed * delta;
 			if (position.y > tracking.y) ya -= speed * delta;
 			if (position.y < tracking.y) ya += speed * delta;
-			move(xa, ya);
+			if (getDistanceFrom(tracking) > 100) {
+				move(xa, ya);
+			}
 		}
 		setAngleToTarget();
 	}
@@ -37,13 +39,11 @@ public class Enemy extends Mob {
 	public void update(int delta, List<Projectile> projectiles) {
 		update(delta);
 		for (Projectile p : projectiles) {
-			if (p.position.x > position.x && p.position.x + p.size.x < position.x + size.x) {
-				if (p.position.y > position.y && p.position.y + p.size.y < position.y + size.y) {
-					health--;
-					if (health < 0) remove();
-					p.remove();
-					// TODO add blood
-				}
+			if (getDistanceFrom(p) < 50 * 20) {
+				health--;
+				if (health < 0) remove();
+				p.remove();
+				// TODO add blood
 			}
 		}
 	}

@@ -38,7 +38,7 @@ public abstract class Mob extends Entity {
 			Image image = sprite.getImage();
 			image.setCenterOfRotation(image.getWidth() / 2, image.getHeight() / 2);
 			image.setRotation(rotation);
-			g.drawImage(sprite.getImage(), x_off + position.x, y_off + position.y);
+			g.drawImage(sprite.getImage(), x_off + position.x - (image.getWidth() / 2), y_off + position.y - (image.getHeight() / 2));
 		}
 	}
 
@@ -52,9 +52,9 @@ public abstract class Mob extends Entity {
 	private void checkMove(Map map, float xa, float ya) {
 		float tx = position.x + xa;
 		float ty = position.y + ya;
-		int offset = 0;
-		if (this instanceof Projectile) offset = 32;
-		if (!map.getTile((int) Math.round((tx - offset) / 64), (int) Math.round((ty - offset) / 64)).isSolid()) {
+		int offset = Math.max(sprite.getWidth() / 2, sprite.getHeight() / 2);
+		Vector2f tilePosition = new Vector2f(Math.round((tx - offset) / 64), Math.round((ty - offset) / 64));
+		if (!map.getTile((int) tilePosition.x, (int) tilePosition.y).isSolid()) {
 			position.set(tx, ty);
 		} else {
 			if (this instanceof Projectile) {
@@ -90,5 +90,13 @@ public abstract class Mob extends Entity {
 
 	public void setSpeed(float speed) {
 		this.speed = speed;
+	}
+
+	public float getDistanceFrom(Entity entity) {
+		return getDistanceFrom(entity.position);
+	}
+
+	public float getDistanceFrom(Vector2f track) {
+		return (float) Math.abs((Math.pow(position.x - track.x, 2) + Math.pow(position.y - track.y, 2)));
 	}
 }

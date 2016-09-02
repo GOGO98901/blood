@@ -3,7 +3,7 @@ package me.roryclaasen.blood.level;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import net.gogo98901.log.Log;
+import me.roryclaasen.blood.graphics.FontMannager;
 import net.roryclaasen.language.LangUtil;
 
 public class WaveSystem {
@@ -38,7 +38,6 @@ public class WaveSystem {
 		if (time > 500 - (currentWave * (1 + mul))) {
 			if (toSpawn > 0) {
 				toSpawn--;
-				Log.info(toSpawn);
 				level.spawnNewEnemy();
 				time = 0;
 				if (toSpawn == 0) nextWave();
@@ -52,9 +51,11 @@ public class WaveSystem {
 	}
 
 	public void render(Graphics g) {
-		if (renderWave) {
+		//if (renderWave) {
+			g.setFont(FontMannager.spaceman);
+			FontMannager.spaceman.drawString(0, 0, "this is a test");
 			g.setColor(Color.black);
 			g.drawString(LangUtil.get("game.wave") + " " + currentWave, 100, 100);
-		}
+		//}
 	}
 }

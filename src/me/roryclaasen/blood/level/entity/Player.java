@@ -35,7 +35,7 @@ public class Player extends Mob {
 			if (coolTime > 15) {
 				coolTime = 0;
 				GameLevel level = ((StateGame) GameMaster.getLoop().getCurrentState()).getLevel();
-				level.add(new Projectile(position.x + 32, position.y + 32, rotation - 90f));
+				level.add(new Projectile(position.x, position.y, rotation - 90f));
 			}
 		}
 	}

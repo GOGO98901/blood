@@ -27,4 +27,12 @@ public class Sprite {
 	public boolean hasFailed() {
 		return failed;
 	}
+
+	public int getWidth() {
+		return image.getWidth();
+	}
+
+	public int getHeight() {
+		return image.getHeight();
+	}
 }
