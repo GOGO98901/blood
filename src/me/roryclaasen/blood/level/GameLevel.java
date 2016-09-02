@@ -11,6 +11,7 @@ import org.newdawn.slick.geom.Vector2f;
 import me.roryclaasen.blood.GameMaster;
 import me.roryclaasen.blood.graphics.sprite.Sprite;
 import me.roryclaasen.blood.graphics.tile.Tile;
+import me.roryclaasen.blood.level.entity.Blood;
 import me.roryclaasen.blood.level.entity.Enemy;
 import me.roryclaasen.blood.level.entity.Entity;
 import me.roryclaasen.blood.level.entity.Mob;
@@ -90,7 +91,6 @@ public class GameLevel {
 	}
 
 	public void render(Graphics g) {
-		waves.render(g);
 		/*
 		 * int px, py;
 		 * px = (int) Math.round(player.getPosition().x / 64);
@@ -119,6 +119,9 @@ public class GameLevel {
 			if (entity instanceof Mob) {
 				((Mob) entity).render(x_off, y_off, g);
 			}
+			if (entity instanceof Blood) {
+				((Blood) entity).render(x_off, y_off, g);
+			}
 		}
 		Iterator<Enemy> itEnm = enemies.iterator();
 		while (itEnm.hasNext()) {
@@ -126,6 +129,7 @@ public class GameLevel {
 			enemy.render(x_off, y_off, g);
 		}
 		player.render(x_off, y_off, g);
+		waves.render(g);
 	}
 
 	public void add(Entity entity) {

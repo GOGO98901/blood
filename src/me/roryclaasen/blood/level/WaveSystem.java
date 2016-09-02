@@ -31,31 +31,32 @@ public class WaveSystem {
 		currentWave++;
 		time = 0;
 		toSpawn = (int) Math.ceil(currentWave * toSpawnBase * mul);
+		renderWave = true;
 	}
 
 	public void update(int delta) {
 		time += 0.5 * delta;
-		if (time > 500 - (currentWave * (1 + mul))) {
-			if (toSpawn > 0) {
-				toSpawn--;
-				level.spawnNewEnemy();
-				time = 0;
-				if (toSpawn == 0) nextWave();
-			} else {
-				renderWave = true;
-				if (time > 1000) {
-					nextWave();
+		if (renderWave) {
+			if (time > 3 * 1000) {
+				renderWave = false;
+			}
+		} else {
+			if (time > 500 - (currentWave * (1 + mul))) {
+				if (toSpawn > 0) {
+					toSpawn--;
+					level.spawnNewEnemy();
+					time = 0;
+					if (toSpawn == 0) nextWave();
 				}
 			}
 		}
 	}
 
 	public void render(Graphics g) {
-		//if (renderWave) {
-			g.setFont(FontMannager.spaceman);
-			FontMannager.spaceman.drawString(0, 0, "this is a test");
+		if (renderWave) {
+			g.setFont(FontMannager.ka1);
 			g.setColor(Color.black);
-			g.drawString(LangUtil.get("game.wave") + " " + currentWave, 100, 100);
-		//}
+			g.drawString(LangUtil.get("game.wave") + " " + currentWave, 50, 50);
+		}
 	}
 }

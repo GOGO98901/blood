@@ -5,7 +5,11 @@ import java.util.Random;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import me.roryclaasen.blood.GameMaster;
+import me.roryclaasen.blood.graphics.GameCanvas;
 import me.roryclaasen.blood.graphics.sprite.Sprite;
+import me.roryclaasen.blood.level.GameLevel;
+import me.roryclaasen.blood.states.StateGame;
 
 public class Enemy extends Mob {
 
@@ -43,7 +47,10 @@ public class Enemy extends Mob {
 				health--;
 				if (health < 0) remove();
 				p.remove();
-				// TODO add blood
+				GameLevel level = ((StateGame) GameMaster.getLoop().getCurrentState()).getLevel();
+				for (int i = 0; i < 15; i++) {
+					level.add(new Blood(position));
+				}
 			}
 		}
 	}

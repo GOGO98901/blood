@@ -30,7 +30,6 @@ public class Player extends Mob {
 			else if (HandlerKeyboard.d) xa += speed * delta;
 		}
 		move(xa, ya);
-
 		if (HandlerMouse.getButton() == HandlerMouse.BTN_LEFT) {
 			if (coolTime > 15) {
 				coolTime = 0;
